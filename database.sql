@@ -1,4 +1,4 @@
--- Primero crear la base veterinaria_db y ejecutar este script dentro de ella.
+-- Ejecutar en la base veterinaria_db.
 CREATE TABLE mascotas (
     id SERIAL PRIMARY KEY,
     chip CHAR(15) NOT NULL UNIQUE,

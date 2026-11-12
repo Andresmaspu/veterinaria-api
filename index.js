@@ -9,24 +9,24 @@ app.get('/', (req, res) => {
   res.status(200).json({ mensaje: 'API de la veterinaria' });
 });
 
-// Límites elegidos para esta práctica, en kilogramos.
+// Peso máximo en kg para cada especie.
 const pesosMaximos = { Perro: 100, Gato: 20, Conejo: 10, Ave: 5 };
 
 function validarMascota(datos) {
   if (!datos || typeof datos !== 'object' || Array.isArray(datos)) {
-    return 'Debes enviar los datos de la mascota';
+    return 'Faltan los datos de la mascota';
   }
   if (typeof datos.chip !== 'string' || !/^\d{15}$/.test(datos.chip)) {
-    return 'El chip debe tener exactamente 15 dígitos';
+    return 'El chip debe tener 15 dígitos';
   }
   if (typeof datos.nombre !== 'string' || !datos.nombre.trim() || datos.nombre.length > 50) {
-    return 'El nombre es obligatorio y debe tener máximo 50 caracteres';
+    return 'Escribe un nombre de hasta 50 caracteres';
   }
   if (!Object.hasOwn(pesosMaximos, datos.especie)) {
     return 'La especie debe ser Perro, Gato, Conejo o Ave';
   }
   if (typeof datos.raza !== 'string' || !datos.raza.trim() || datos.raza.length > 50) {
-    return 'La raza es obligatoria y debe tener máximo 50 caracteres';
+    return 'Escribe una raza de hasta 50 caracteres';
   }
   if (!Number.isInteger(datos.edad) || datos.edad < 0 || datos.edad > 100) {
     return 'La edad debe ser un número entero entre 0 y 100';
@@ -37,7 +37,7 @@ function validarMascota(datos) {
     return `El peso de ${datos.especie} debe estar entre 0.01 y ${pesosMaximos[datos.especie]} kg, con máximo dos decimales`;
   }
   if (typeof datos.telefono_dueno !== 'string' || !/^\d{10}$/.test(datos.telefono_dueno)) {
-    return 'El teléfono del dueño debe tener exactamente 10 dígitos';
+    return 'El teléfono debe tener 10 dígitos';
   }
   if (datos.hospitalizado !== undefined && typeof datos.hospitalizado !== 'boolean') {
     return 'Hospitalizado debe ser true o false';
@@ -45,7 +45,7 @@ function validarMascota(datos) {
   return null;
 }
 
-// Se ejecuta antes de las rutas que reciben un id.
+// Revisar el id antes de buscar la mascota.
 app.param('id', (req, res, next, id) => {
   if (!/^\d+$/.test(id) || Number(id) < 1 || Number(id) > 2147483647) {
     return res.status(400).json({ mensaje: 'El id debe ser un entero positivo válido' });
@@ -119,7 +119,7 @@ app.delete('/api/mascotas/:id', async (req, res, next) => {
   const cliente = await pool.connect();
   try {
     await cliente.query('BEGIN');
-    // El bloqueo evita que cambien la hospitalización mientras se elimina.
+    // Bloquear el registro mientras se revisa si se puede eliminar.
     const resultado = await cliente.query('SELECT * FROM mascotas WHERE id = $1 FOR UPDATE', [req.params.id]);
     if (resultado.rows.length === 0) {
       await cliente.query('ROLLBACK');
@@ -148,7 +148,7 @@ app.use((error, req, res, next) => {
     return res.status(400).json({ mensaje: 'El JSON enviado no es válido' });
   }
   console.error(error.message);
-  res.status(500).json({ mensaje: 'Error interno del servidor' });
+  res.status(500).json({ mensaje: 'Ocurrió un error en el servidor' });
 });
 
 app.listen(3000, () => {
