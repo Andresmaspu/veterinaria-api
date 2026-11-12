@@ -1,0 +1,388 @@
+{
+  "fecha": "2026-11-12T01:35:47.973Z",
+  "pruebas": [
+    {
+      "titulo": "Listar mascotas",
+      "metodo": "GET",
+      "url": "http://localhost:3000/api/mascotas",
+      "estado": 200,
+      "respuesta": [
+        {
+          "id": 1,
+          "chip": "985141000123456",
+          "nombre": "Firulais",
+          "especie": "Perro",
+          "raza": "Mestizo",
+          "edad": 4,
+          "peso": "18.50",
+          "telefono_dueno": "0991234567",
+          "hospitalizado": false
+        },
+        {
+          "id": 2,
+          "chip": "985141000123457",
+          "nombre": "Michi",
+          "especie": "Gato",
+          "raza": "Siamés",
+          "edad": 2,
+          "peso": "4.20",
+          "telefono_dueno": "0987654321",
+          "hospitalizado": false
+        },
+        {
+          "id": 3,
+          "chip": "985141000123458",
+          "nombre": "Copito",
+          "especie": "Conejo",
+          "raza": "Cabeza de león",
+          "edad": 1,
+          "peso": "1.80",
+          "telefono_dueno": "0998765432",
+          "hospitalizado": false
+        },
+        {
+          "id": 4,
+          "chip": "985141000123459",
+          "nombre": "Paco",
+          "especie": "Ave",
+          "raza": "Periquito",
+          "edad": 3,
+          "peso": "0.04",
+          "telefono_dueno": "0976543210",
+          "hospitalizado": false
+        },
+        {
+          "id": 5,
+          "chip": "985141000123460",
+          "nombre": "Rocky",
+          "especie": "Perro",
+          "raza": "Pastor alemán",
+          "edad": 9,
+          "peso": "32.00",
+          "telefono_dueno": "0961122334",
+          "hospitalizado": true
+        }
+      ]
+    },
+    {
+      "titulo": "Consultar una mascota",
+      "metodo": "GET",
+      "url": "http://localhost:3000/api/mascotas/1",
+      "estado": 200,
+      "respuesta": {
+        "id": 1,
+        "chip": "985141000123456",
+        "nombre": "Firulais",
+        "especie": "Perro",
+        "raza": "Mestizo",
+        "edad": 4,
+        "peso": "18.50",
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      }
+    },
+    {
+      "titulo": "Registrar mascota",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {
+        "chip": "999999999999991",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 201,
+      "respuesta": {
+        "id": 8,
+        "chip": "999999999999991",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": "0.04",
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      }
+    },
+    {
+      "titulo": "Editar mascota",
+      "metodo": "PUT",
+      "url": "http://localhost:3000/api/mascotas/8",
+      "datos": {
+        "chip": "999999999999991",
+        "nombre": "Prueba editada",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 200,
+      "respuesta": {
+        "id": 8,
+        "chip": "999999999999991",
+        "nombre": "Prueba editada",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": "0.04",
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      }
+    },
+    {
+      "titulo": "Chip repetido al registrar",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {
+        "chip": "985141000123456",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 409,
+      "respuesta": {
+        "mensaje": "Ya existe una mascota con ese chip"
+      }
+    },
+    {
+      "titulo": "Chip repetido al editar",
+      "metodo": "PUT",
+      "url": "http://localhost:3000/api/mascotas/8",
+      "datos": {
+        "chip": "985141000123456",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 409,
+      "respuesta": {
+        "mensaje": "Ya existe una mascota con ese chip"
+      }
+    },
+    {
+      "titulo": "Telefono incompleto",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {
+        "chip": "999999999999991",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "099",
+        "hospitalizado": false
+      },
+      "estado": 400,
+      "respuesta": {
+        "mensaje": "El teléfono del dueño debe tener exactamente 10 dígitos"
+      }
+    },
+    {
+      "titulo": "Periquito de 20 kg",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {
+        "chip": "999999999999991",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 20,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 400,
+      "respuesta": {
+        "mensaje": "El peso de Ave debe estar entre 0.01 y 5 kg, con máximo dos decimales"
+      }
+    },
+    {
+      "titulo": "Edad negativa",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {
+        "chip": "999999999999991",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": -1,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 400,
+      "respuesta": {
+        "mensaje": "La edad debe ser un número entero entre 0 y 100"
+      }
+    },
+    {
+      "titulo": "Chip incompleto",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {
+        "chip": "123",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 400,
+      "respuesta": {
+        "mensaje": "El chip debe tener exactamente 15 dígitos"
+      }
+    },
+    {
+      "titulo": "Datos vacios",
+      "metodo": "POST",
+      "url": "http://localhost:3000/api/mascotas",
+      "datos": {},
+      "estado": 400,
+      "respuesta": {
+        "mensaje": "El chip debe tener exactamente 15 dígitos"
+      }
+    },
+    {
+      "titulo": "Id invalido",
+      "metodo": "GET",
+      "url": "http://localhost:3000/api/mascotas/abc",
+      "estado": 400,
+      "respuesta": {
+        "mensaje": "El id debe ser un entero positivo válido"
+      }
+    },
+    {
+      "titulo": "Consultar inexistente",
+      "metodo": "GET",
+      "url": "http://localhost:3000/api/mascotas/2147483647",
+      "estado": 404,
+      "respuesta": {
+        "mensaje": "Mascota no encontrada"
+      }
+    },
+    {
+      "titulo": "Editar inexistente",
+      "metodo": "PUT",
+      "url": "http://localhost:3000/api/mascotas/2147483647",
+      "datos": {
+        "chip": "999999999999991",
+        "nombre": "Prueba",
+        "especie": "Ave",
+        "raza": "Periquito",
+        "edad": 2,
+        "peso": 0.04,
+        "telefono_dueno": "0991234567",
+        "hospitalizado": false
+      },
+      "estado": 404,
+      "respuesta": {
+        "mensaje": "Mascota no encontrada"
+      }
+    },
+    {
+      "titulo": "Eliminar hospitalizada",
+      "metodo": "DELETE",
+      "url": "http://localhost:3000/api/mascotas/5",
+      "estado": 409,
+      "respuesta": {
+        "mensaje": "No se puede eliminar una mascota hospitalizada"
+      }
+    },
+    {
+      "titulo": "Eliminar mascota",
+      "metodo": "DELETE",
+      "url": "http://localhost:3000/api/mascotas/8",
+      "estado": 204,
+      "respuesta": null
+    },
+    {
+      "titulo": "Eliminar inexistente",
+      "metodo": "DELETE",
+      "url": "http://localhost:3000/api/mascotas/2147483647",
+      "estado": 404,
+      "respuesta": {
+        "mensaje": "Mascota no encontrada"
+      }
+    },
+    {
+      "titulo": "Verificar registros originales",
+      "metodo": "GET",
+      "url": "http://localhost:3000/api/mascotas",
+      "estado": 200,
+      "respuesta": [
+        {
+          "id": 1,
+          "chip": "985141000123456",
+          "nombre": "Firulais",
+          "especie": "Perro",
+          "raza": "Mestizo",
+          "edad": 4,
+          "peso": "18.50",
+          "telefono_dueno": "0991234567",
+          "hospitalizado": false
+        },
+        {
+          "id": 2,
+          "chip": "985141000123457",
+          "nombre": "Michi",
+          "especie": "Gato",
+          "raza": "Siamés",
+          "edad": 2,
+          "peso": "4.20",
+          "telefono_dueno": "0987654321",
+          "hospitalizado": false
+        },
+        {
+          "id": 3,
+          "chip": "985141000123458",
+          "nombre": "Copito",
+          "especie": "Conejo",
+          "raza": "Cabeza de león",
+          "edad": 1,
+          "peso": "1.80",
+          "telefono_dueno": "0998765432",
+          "hospitalizado": false
+        },
+        {
+          "id": 4,
+          "chip": "985141000123459",
+          "nombre": "Paco",
+          "especie": "Ave",
+          "raza": "Periquito",
+          "edad": 3,
+          "peso": "0.04",
+          "telefono_dueno": "0976543210",
+          "hospitalizado": false
+        },
+        {
+          "id": 5,
+          "chip": "985141000123460",
+          "nombre": "Rocky",
+          "especie": "Perro",
+          "raza": "Pastor alemán",
+          "edad": 9,
+          "peso": "32.00",
+          "telefono_dueno": "0961122334",
+          "hospitalizado": true
+        }
+      ]
+    }
+  ]
+}
